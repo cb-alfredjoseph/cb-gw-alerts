@@ -3,13 +3,11 @@ package com.chargebee.cbgwalerts.controllers;
 import com.chargebee.cbgwalerts.email.FeedbackService;
 import com.chargebee.cbgwalerts.entity.MerchantDomain;
 import com.chargebee.cbgwalerts.entity.PaymentGateway;
-import com.chargebee.cbgwalerts.entity.PaymentMethod;
 import com.chargebee.cbgwalerts.entity.Transactions;
 import com.chargebee.cbgwalerts.service.TransactionsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,16 +42,15 @@ public class AlertController {
         {
             merchantDomainList = paymentGateway.getPaymentMethodList().get(0).getMerchantDomainList();
         }
-          //  merchantDomainList = paymentGateway.getPaymentMethodList().get(0).getMerchantDomainList();
-        List<PaymentMethod> paymentMethodList = new ArrayList<>();
-        paymentMethodList=paymentGateway.getPaymentMethodList();
 
         Map<String, Object> model = new HashMap<>();
+
         model.put("gateway", gateway_name);
         model.put("paymentMethod", payment_methodName);
         model.put("status", status);
-        model.put("merchantDomainList ", merchantDomainList );
-        model.put("paymentMethodList",paymentMethodList);
+        model.put("merchantDomainList", merchantDomainList );
+
+
         feedbackService.sendFeedback(model);
         return paymentGateway;
         //return transactionsRepository.listDomainAndCount(gateway_name,payment_method,status);
