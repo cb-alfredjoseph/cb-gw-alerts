@@ -11,12 +11,13 @@ import java.util.List;
 
 @Repository
 public interface TransactionsRepository extends JpaRepository<Transactions,Integer> {
-    @Query("Select new com.chargebee.cbgwalerts.entity.DomainAndCountResult(t.site_id, count(t.site_id))"
-        + "from Transactions as t where t.gateway = :gateway and t.payment_method = :payment and t.status = :status group by t.site_id")
+    @Query("select new com.chargebee.cbgwalerts.entity.DomainAndCountResult(ls.domain ,count(t.site_id)) from Transactions t join LiteSites ls on t.site_id =ls.site_id where t.gateway =:gateway and t.payment_method=:payment and t.status=:status group by t.site_id")
     List<DomainAndCountResult> listDomainAndCount(@Param("gateway") int gw, @Param("payment") int payment,
                                                   @Param("status") int status);
-    //@Query("Select " + "from Transactions as t where t.gateway = :gateway and t.payment_method = :payment and t.status = :status group by t.site_id")
 
+   // @Query("Select " + "from Transactions as t where t.gateway = :gateway and t.payment_method = :payment and t.status = :status group by t.site_id")
+//    List<DomainAndCountResult> listDomainAndCount(@Param("gateway") int gw, @Param("payment") int payment,
+//                                                  @Param("status") int status);
 }
 
 

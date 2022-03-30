@@ -1,9 +1,12 @@
 package com.chargebee.cbgwalerts.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.ToString;
 
 import java.util.*;
-
+@ToString
+@Data
 public class PaymentGateway {
     @JsonProperty("paymentMethodList")
     List<PaymentMethod> paymentMethodList = new ArrayList<>();
@@ -21,4 +24,5 @@ public class PaymentGateway {
        return  this.paymentMethodList;
 
     }
+
 }

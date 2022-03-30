@@ -1,9 +1,12 @@
 package com.chargebee.cbgwalerts.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.ToString;
 
 import java.util.*;
-
+@Data
+@ToString
 public class PaymentMethod{
     @JsonProperty("merchantDomainList")
     List<MerchantDomain> merchantDomainList = new ArrayList<>();
