@@ -17,4 +17,9 @@ public class PaymentMethod{
         this.merchantDomainList.add(merchantDomainsItem);
         return this;
     }
+
+    public  List<MerchantDomain> getMerchantDomainList() {
+       return  this.merchantDomainList;
+
+    }
 }
