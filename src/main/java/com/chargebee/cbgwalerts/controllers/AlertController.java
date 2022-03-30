@@ -1,16 +1,13 @@
 package com.chargebee.cbgwalerts.controllers;
 
 import com.chargebee.cbgwalerts.email.FeedbackService;
-import com.chargebee.cbgwalerts.entity.MerchantDomain;
 import com.chargebee.cbgwalerts.entity.PaymentGateway;
 import com.chargebee.cbgwalerts.entity.Transactions;
 import com.chargebee.cbgwalerts.service.TransactionsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class AlertController {
@@ -37,21 +34,21 @@ public class AlertController {
                                             @RequestParam("payment_method") String payment_methodName,
                                             @RequestParam("status") int status) {
         PaymentGateway paymentGateway = transactionsService.returnFinal(gateway_name, payment_methodName, status);
-        List<MerchantDomain> merchantDomainList = null;
-        if (paymentGateway != null && paymentGateway.getPaymentMethodList() != null && paymentGateway.getPaymentMethodList().size() != 0)
-        {
-            merchantDomainList = paymentGateway.getPaymentMethodList().get(0).getMerchantDomainList();
-        }
-
-        Map<String, Object> model = new HashMap<>();
-
-        model.put("gateway", gateway_name);
-        model.put("paymentMethod", payment_methodName);
-        model.put("status", status);
-        model.put("merchantDomainList", merchantDomainList );
-
-
-        feedbackService.sendFeedback(model);
+//        List<MerchantDomain> merchantDomainList = null;
+//        if (paymentGateway != null && paymentGateway.getPaymentMethodList() != null && paymentGateway.getPaymentMethodList().size() != 0)
+//        {
+//            merchantDomainList = paymentGateway.getPaymentMethodList().get(0).getMerchantDomainList();
+//        }
+//
+//        Map<String, Object> model = new HashMap<>();
+//
+//        model.put("gateway", gateway_name);
+//        model.put("paymentMethod", payment_methodName);
+//        model.put("status", status);
+//        model.put("merchantDomainList", merchantDomainList );
+//
+//
+//        feedbackService.sendFeedback(model);
         return paymentGateway;
         //return transactionsRepository.listDomainAndCount(gateway_name,payment_method,status);
     }

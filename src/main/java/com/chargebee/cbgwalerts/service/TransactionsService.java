@@ -1,5 +1,6 @@
 package com.chargebee.cbgwalerts.service;
 
+import com.chargebee.cbgwalerts.email.FeedbackService;
 import com.chargebee.cbgwalerts.entity.*;
 import com.chargebee.cbgwalerts.repository.TransactionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class TransactionsService {
     private int paymentMethodId;
 
     private TransactionsRepository transactionsRepository;
+
+    @Autowired
+    private FeedbackService feedbackService;
 
     @Autowired
     public TransactionsService(TransactionsRepository transactionsRepository){
@@ -61,6 +65,25 @@ public class TransactionsService {
         paymentGateway.listPaymentMethods(paymentMethodList);
         Optional<Name> gatewayName = Name.get(gatewayId);
         System.out.println(gatewayName.get());
+
+        //***************
+        List<MerchantDomain> merchantDomainListLocal = null;
+        if (paymentGateway != null && paymentGateway.getPaymentMethodList() != null && paymentGateway.getPaymentMethodList().size() != 0)
+        {
+            merchantDomainListLocal = paymentGateway.getPaymentMethodList().get(0).getMerchantDomainList();
+        }
+
+        Map<String, Object> model = new HashMap<>();
+
+        model.put("gateway", gateway_name);
+        model.put("paymentMethod", payment_methodName);
+        model.put("status", status);
+        model.put("merchantDomainList", merchantDomainListLocal );
+
+
+        feedbackService.sendFeedback(model);
+
+        //**************
         return paymentGateway;
     }
     public enum Name {
