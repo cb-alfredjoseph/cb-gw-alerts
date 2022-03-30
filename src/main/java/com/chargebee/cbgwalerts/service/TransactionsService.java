@@ -5,10 +5,7 @@ import com.chargebee.cbgwalerts.repository.TransactionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TransactionsService {
@@ -106,4 +103,12 @@ public class TransactionsService {
         }
     }
 //siddhant's work integration of Email Sender (with domain name and DomainAndCount) result.
+//    public emailInvoke(Map<String,Object> model){
+//        Map<String,Object> model = new HashMap<>();
+//        model.put("gateway",gateway_name);
+//        model.put("paymentMethod",payment_methodName);
+//        model.put("status",status);
+//        model.put("payment",paymentGateway);
+//        feedbackService.sendFeedback(model);
+//    }
 }

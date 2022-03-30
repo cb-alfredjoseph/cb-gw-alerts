@@ -20,5 +20,9 @@ public class PaymentGateway {
         this.paymentMethodList.add(paymentMethodsItem);
         return this;
     }
+    public   List<PaymentMethod> getPaymentMethodList() {
+       return  this.paymentMethodList;
+
+    }
 
 }
