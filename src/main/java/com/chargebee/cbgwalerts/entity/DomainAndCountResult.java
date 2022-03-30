@@ -1,19 +1,19 @@
 package com.chargebee.cbgwalerts.entity;
 
 public class DomainAndCountResult {
-    private long site_id;
+    private String domainName;
     private long count;
-    public DomainAndCountResult(long site_id, long count){
-        this.site_id = site_id;
+    public DomainAndCountResult(String domainName, long count){
+        this.domainName = domainName;
         this.count = count;
     }
 
-    public long getSite_id() {
-        return site_id;
+    public String getDomainName() {
+        return domainName;
     }
 
-    public void setSite_id(int site_id) {
-        this.site_id = site_id;
+    public void setDomainName(String domainName) {
+        this.domainName = domainName;
     }
 
     public long getCount() {
