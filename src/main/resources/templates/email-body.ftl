@@ -22,7 +22,7 @@
 
 
     <#list merchantDomainList as merchantDomainList>
-        <tr>
+        <tr style="text-align: center">
             <td>${(gateway)!"NA"}</td>
             <td>${(paymentMethod)!"NA"}</td>
             <td>${(status)!"NA"}</td>
