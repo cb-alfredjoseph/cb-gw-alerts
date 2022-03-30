@@ -16,20 +16,22 @@
         <th>Payment Method</th>
         <th>Status</th>
         <th>Count</th>
-<#--        <th>Name</th>-->
-<#--        <th>Link</th>-->
+        <th>Name</th>
+        <th>Link</th>
     </tr>
 
-     <#list   paymentMethodList as paymentMethodList>
-          <tr>
-            <td>${gateway}</td>
-            <td>${paymentMethod}</td>
-            <td>${status}</td>
-              <td>${paymentMethodList.merchantDomainList.count}</td>
-<#--              <td>${merchant.name}</td>-->
-<#--              <td>${merchant.link}</td>-->
+
+    <#list merchantDomainList as merchantDomainList>
+        <tr>
+            <td>${(gateway)!"NA"}</td>
+            <td>${(paymentMethod)!"NA"}</td>
+            <td>${(status)!"NA"}</td>
+            <td>${(merchantDomainList.count)!"NA"}</td>
+
+            <td>${(merchantDomainList.name)!"NA"}</td>
+            <td>${(merchantDomainList.link)!"NA"}</td>
         </tr>
-     </#list>
+    </#list>
 
 </table>
 <#--<#list merchantDomainList as merchantDomainList>-->

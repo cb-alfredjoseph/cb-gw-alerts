@@ -8,9 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
-import java.util.*;
+
 import java.util.Date;
 
 @SpringBootApplication
@@ -27,7 +26,7 @@ public class CbGwAlertsApplication {
     private TransactionsService transactionsService;
 
 
-    @Scheduled(initialDelay = 1000L, fixedDelay = 2000L)
+    @Scheduled(initialDelay = 1000L, fixedDelay = 20000L)
     public PaymentGateway job() throws InterruptedException {
         System.out.println("The time is : " + new Date());
         //PaymentGateway paymentGateway = transactionsService.returnFinal("chargebee","card",100);
