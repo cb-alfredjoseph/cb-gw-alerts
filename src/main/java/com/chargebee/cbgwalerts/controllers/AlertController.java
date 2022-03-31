@@ -7,6 +7,7 @@ import com.chargebee.cbgwalerts.service.TransactionsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.internet.AddressException;
 import java.util.List;
 
 @RestController
@@ -32,23 +33,8 @@ public class AlertController {
     @GetMapping("/displayTransactions")
     public PaymentGateway getDomainAndCount(@RequestParam("gateway") String gateway_name,
                                             @RequestParam("payment_method") String payment_methodName,
-                                            @RequestParam("status") int status) {
+                                            @RequestParam("status") int status) throws AddressException {
         PaymentGateway paymentGateway = transactionsService.returnFinal(gateway_name, payment_methodName, status);
-//        List<MerchantDomain> merchantDomainList = null;
-//        if (paymentGateway != null && paymentGateway.getPaymentMethodList() != null && paymentGateway.getPaymentMethodList().size() != 0)
-//        {
-//            merchantDomainList = paymentGateway.getPaymentMethodList().get(0).getMerchantDomainList();
-//        }
-//
-//        Map<String, Object> model = new HashMap<>();
-//
-//        model.put("gateway", gateway_name);
-//        model.put("paymentMethod", payment_methodName);
-//        model.put("status", status);
-//        model.put("merchantDomainList", merchantDomainList );
-//
-//
-//        feedbackService.sendFeedback(model);
         return paymentGateway;
         //return transactionsRepository.listDomainAndCount(gateway_name,payment_method,status);
     }

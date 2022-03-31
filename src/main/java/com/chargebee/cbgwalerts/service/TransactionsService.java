@@ -10,6 +10,7 @@ import com.chargebee.cbgwalerts.repository.TransactionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.internet.AddressException;
 import java.util.*;
 
 @Service
@@ -35,7 +36,7 @@ public class TransactionsService {
         transactionsRepository.save(transaction);
     }
 
-    public PaymentGateway returnFinal(String gateway_name, String payment_methodName, int status){
+    public PaymentGateway returnFinal(String gateway_name, String payment_methodName, int status) throws AddressException {
         String gatewayNameUpper = gateway_name.toUpperCase();
         Name gwId = Name.valueOf(gatewayNameUpper);
         gatewayId = gwId.getValue();
