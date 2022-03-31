@@ -1,4 +1,4 @@
-package com.chargebee.cbgwalerts.entity;
+package com.chargebee.cbgwalerts.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -21,7 +21,7 @@ public class PaymentGateway {
         return this;
     }
     public   List<PaymentMethod> getPaymentMethodList() {
-       return  this.paymentMethodList;
+        return  this.paymentMethodList;
 
     }
 

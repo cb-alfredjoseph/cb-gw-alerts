@@ -19,9 +19,9 @@ import java.util.Properties;
 @Service
 public class FeedbackService {
     String TO="siddhantchourasia99@gmail.com";
-    String Name="Siddhant Chourasia";
+    String Name="Rohit";
     String From="siddhant.chourasia@chargebee.com";
-    String Subject="Testing...";
+    String Subject="Email Working";
     public  EmailCfg emailCfg;
     @Autowired
     public FeedbackService(EmailCfg emailCfg)

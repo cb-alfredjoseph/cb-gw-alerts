@@ -1,4 +1,4 @@
-package com.chargebee.cbgwalerts.entity;
+package com.chargebee.cbgwalerts.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

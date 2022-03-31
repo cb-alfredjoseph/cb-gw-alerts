@@ -1,4 +1,4 @@
-package com.chargebee.cbgwalerts.entity;
+package com.chargebee.cbgwalerts.models;
 
 public class DomainAndCountResult {
     private String domainName;

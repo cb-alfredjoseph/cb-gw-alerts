@@ -47,6 +47,8 @@ public class Transactions {
     private int fraud_status;
     @Column(name="status")
     private int status;
+//    @Column(name="created_at")
+//    private DateTimeFormat created_at;
 
     public Transactions() {
 

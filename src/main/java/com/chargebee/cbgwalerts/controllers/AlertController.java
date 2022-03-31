@@ -1,7 +1,7 @@
 package com.chargebee.cbgwalerts.controllers;
 
 import com.chargebee.cbgwalerts.email.FeedbackService;
-import com.chargebee.cbgwalerts.entity.PaymentGateway;
+import com.chargebee.cbgwalerts.models.PaymentGateway;
 import com.chargebee.cbgwalerts.entity.Transactions;
 import com.chargebee.cbgwalerts.service.TransactionsService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,6 +2,10 @@ package com.chargebee.cbgwalerts.service;
 
 import com.chargebee.cbgwalerts.email.FeedbackService;
 import com.chargebee.cbgwalerts.entity.*;
+import com.chargebee.cbgwalerts.models.DomainAndCountResult;
+import com.chargebee.cbgwalerts.models.MerchantDomain;
+import com.chargebee.cbgwalerts.models.PaymentGateway;
+import com.chargebee.cbgwalerts.models.PaymentMethod;
 import com.chargebee.cbgwalerts.repository.TransactionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
