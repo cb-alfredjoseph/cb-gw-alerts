@@ -56,7 +56,7 @@ public class TransactionsService {
         List<PaymentMethod> paymentMethodList = new ArrayList<>();
         PaymentMethod paymentMethod = new PaymentMethod();
         List<MerchantDomain> merchantDomainList = new ArrayList<>();
-        List<DomainAndCountResult> domainAndCountResultList = transactionsRepository.listDomainAndCount(gatewayId,paymentMethodId,status);
+        List<DomainAndCountResult> domainAndCountResultList = transactionsRepository.listDomainAndCount(gatewayId,paymentMethodId,status,ldt);
         for(DomainAndCountResult dcr : domainAndCountResultList){
             MerchantDomain merchantDomain = new MerchantDomain(dcr.getCount(),null, dcr.getDomainName());
             merchantDomainList.add(merchantDomain);

@@ -7,13 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface TransactionsRepository extends JpaRepository<Transactions,Integer> {
-    @Query("select new com.chargebee.cbgwalerts.models.DomainAndCountResult(ls.domain ,count(t.site_id)) from Transactions t join LiteSites ls on t.site_id =ls.site_id where t.gateway =:gateway and t.payment_method=:payment and t.status=:status group by t.site_id")
+    @Query("select new com.chargebee.cbgwalerts.models.DomainAndCountResult(ls.domain ,count(t.site_id)) from Transactions t join LiteSites ls on t.site_id =ls.site_id where t.gateway =:gateway and t.payment_method=:payment " +
+            "and t.status=:status and t.created_at < :localDateTime group by t.site_id")
     List<DomainAndCountResult> listDomainAndCount(@Param("gateway") int gw, @Param("payment") int payment,
-                                                  @Param("status") int status);
+                                                  @Param("status") int status,@Param("localDateTime") LocalDateTime ldt);
 
    // @Query("Select " + "from Transactions as t where t.gateway = :gateway and t.payment_method = :payment and t.status = :status group by t.site_id")
 //    List<DomainAndCountResult> listDomainAndCount(@Param("gateway") int gw, @Param("payment") int payment,

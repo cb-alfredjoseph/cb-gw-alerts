@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="transactions")
@@ -47,8 +48,8 @@ public class Transactions {
     private int fraud_status;
     @Column(name="status")
     private int status;
-//    @Column(name="created_at")
-//    private DateTimeFormat created_at;
+    @Column(name="created_at")
+    private LocalDateTime created_at;
 
     public Transactions() {
 
