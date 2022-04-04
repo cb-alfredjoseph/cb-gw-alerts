@@ -54,34 +54,36 @@ public class TransactionsService {
         List<PaymentMethod> paymentMethodList = new ArrayList<>();
         PaymentMethod paymentMethod = new PaymentMethod();
         List<MerchantDomain> merchantDomainList = new ArrayList<>();
-        List<DomainAndCount> domainAndCountResultList = transactionsRepository.listDomainAndCount(gatewayId,paymentMethodId,status,ldt);
-        for(DomainAndCount dcr : domainAndCountResultList){
-            MerchantDomain merchantDomain = new MerchantDomain(dcr.getCount(),null, dcr.getDomainName());
+        List<DomainAndCount> domainAndCountList = transactionsRepository.listDomainAndCount(gatewayId,paymentMethodId,status,ldt);
+
+        for(DomainAndCount dc : domainAndCountList){
+            MerchantDomain merchantDomain = new MerchantDomain(dc.getCount(),null, dc.getDomainName());
             merchantDomainList.add(merchantDomain);
         }
 
-        paymentMethod.listMerchantDomains(merchantDomainList);
-        paymentMethodList.add(paymentMethod);
-        paymentGateway.listPaymentMethods(paymentMethodList);
-        Optional<EnumService.Name> gatewayName = EnumService.Name.get(gatewayId);
-        System.out.println(gatewayName.get());
+//        if(merchantDomainList.size()!=0 && merchantDomainList!=null) {
+            paymentMethod.listMerchantDomains(merchantDomainList);
+            paymentMethodList.add(paymentMethod);
+            paymentGateway.listPaymentMethods(paymentMethodList);
+            Optional<EnumService.Name> gatewayName = EnumService.Name.get(gatewayId);
+            System.out.println(gatewayName.get());
 
 
-        List<MerchantDomain> merchantDomainListLocal = null;
-        if (paymentGateway != null && paymentGateway.getPaymentMethodList() != null && paymentGateway.getPaymentMethodList().size() != 0)
-        {
-            merchantDomainListLocal = paymentGateway.getPaymentMethodList().get(0).getMerchantDomainList();
+            List<MerchantDomain> merchantDomainListLocal = null;
+            if (paymentGateway != null && paymentGateway.getPaymentMethodList() != null && paymentGateway.getPaymentMethodList().size() != 0) {
+                merchantDomainListLocal = paymentGateway.getPaymentMethodList().get(0).getMerchantDomainList();
+            }
+        if(merchantDomainList.size()!=0 && merchantDomainList!=null) {
+            Map<String, Object> model = new HashMap<>();
+
+            model.put("gateway", gateway_name);
+            model.put("paymentMethod", payment_methodName);
+            model.put("status", status);
+            model.put("merchantDomainList", merchantDomainListLocal);
+
+
+            emailService.sendEmail(model);
         }
-
-        Map<String, Object> model = new HashMap<>();
-
-        model.put("gateway", gateway_name);
-        model.put("paymentMethod", payment_methodName);
-        model.put("status", status);
-        model.put("merchantDomainList", merchantDomainListLocal );
-
-
-        emailService.sendEmail(model);
 
         return paymentGateway;
     }

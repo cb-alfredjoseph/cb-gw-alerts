@@ -43,7 +43,7 @@ public class PaymentsService {
         String statusNameUpper = status.toUpperCase();
         EnumService.PaymentStatusEnum statusId = EnumService.PaymentStatusEnum.valueOf(statusNameUpper);
         paymentStatusId = statusId.getValue();
-        System.out.println("paymentStatusId " + paymentStatusId);
+
 
         PaymentGateway paymentGateway = new PaymentGateway();
         List<PaymentMethod> paymentMethodList = new ArrayList<>();
@@ -54,26 +54,26 @@ public class PaymentsService {
             MerchantDomain merchantDomain = new MerchantDomain(dcr.getCount(),null, dcr.getDomainName());
             merchantDomainList.add(merchantDomain);
         }
+//        if(merchantDomainList.size()!=0 && merchantDomainList!=null) {
+            paymentMethod.listMerchantDomains(merchantDomainList);
+            paymentMethodList.add(paymentMethod);
+            paymentGateway.listPaymentMethods(paymentMethodList);
 
-        paymentMethod.listMerchantDomains(merchantDomainList);
-        paymentMethodList.add(paymentMethod);
-        paymentGateway.listPaymentMethods(paymentMethodList);
+            List<MerchantDomain> merchantDomainListLocal = null;
+            if (paymentGateway != null && paymentGateway.getPaymentMethodList() != null && paymentGateway.getPaymentMethodList().size() != 0) {
+                merchantDomainListLocal = paymentGateway.getPaymentMethodList().get(0).getMerchantDomainList();
+            }
+        if(merchantDomainList.size()!=0 && merchantDomainList!=null) {
+            Map<String, Object> model = new HashMap<>();
 
-        List<MerchantDomain> merchantDomainListLocal = null;
-        if (paymentGateway != null && paymentGateway.getPaymentMethodList() != null && paymentGateway.getPaymentMethodList().size() != 0)
-        {
-            merchantDomainListLocal = paymentGateway.getPaymentMethodList().get(0).getMerchantDomainList();
+            model.put("gateway", gateway_name);
+            model.put("paymentMethod", payment_methodName);
+            model.put("status", status);
+            model.put("merchantDomainList", merchantDomainListLocal);
+
+
+            emailService.sendEmail(model);
         }
-
-        Map<String, Object> model = new HashMap<>();
-
-        model.put("gateway", gateway_name);
-        model.put("paymentMethod", payment_methodName);
-        model.put("status", status);
-        model.put("merchantDomainList", merchantDomainListLocal );
-
-
-        emailService.sendEmail(model);
 
         return paymentGateway;
 

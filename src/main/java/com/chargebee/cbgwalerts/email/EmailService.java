@@ -35,7 +35,7 @@ public class EmailService {
     String subject;
 
     @Value("#{'${spring.mail.to}'.split(',')}")
-    public List<String> myList;
+    public List<String> recipients;
 
     public EmailConfiguration emailConfiguration;
     @Autowired
@@ -51,11 +51,11 @@ public class EmailService {
 
     public void sendEmail(Map<String, Object> model ) throws AddressException {
 
-        InternetAddress[] recipientAddress = new InternetAddress[myList.size()];
+        InternetAddress[] recipientAddress = new InternetAddress[recipients.size()];
 
 
         int counter = 0;
-        for (String recipient : myList) {
+        for (String recipient : recipients) {
             recipientAddress[counter] = new InternetAddress(recipient.trim());
             counter++;
         }
@@ -72,8 +72,8 @@ public class EmailService {
         MimeMessage msg = new MimeMessage(session);
         Transport transport=null;
         try {
-            Template t = config.getTemplate("email-body.ftl");
-            String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+            Template template = config.getTemplate("email-body.ftl");
+            String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
             msg.setFrom(new InternetAddress(from,name));
             msg.setRecipients(Message.RecipientType.TO, recipientAddress);

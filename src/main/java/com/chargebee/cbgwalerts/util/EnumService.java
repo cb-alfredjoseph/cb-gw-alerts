@@ -1,5 +1,7 @@
 package com.chargebee.cbgwalerts.util;
 
+import com.chargebee.cbgwalerts.exception.InvalidGatewayNameException;
+import com.chargebee.cbgwalerts.exception.InvalidPaymentMethodException;
 import com.chargebee.cbgwalerts.service.TransactionsService;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -70,13 +72,24 @@ public class EnumService {
         }
     }
     public int getGatewayId(String gatewayNameUpper){
-        Name gwId = Name.valueOf(gatewayNameUpper);
+        Name gwId = null;
+        try{
+        gwId = Name.valueOf(gatewayNameUpper);
+        }
+        catch(IllegalArgumentException exception){
+            throw new InvalidGatewayNameException("Check Gateway Name, Entered Gateway Name: " + gatewayNameUpper);
+        }
         int gatewayId = gwId.getValue();
         return gatewayId;
     }
 
     public int getPaymentMethodId(String paymentMethodNameUpper){
-        PaymentMethodEnum paymentType = PaymentMethodEnum.valueOf(paymentMethodNameUpper);
+        PaymentMethodEnum paymentType = null;
+        try{
+            paymentType = PaymentMethodEnum.valueOf(paymentMethodNameUpper);
+        }catch (IllegalArgumentException exception){
+            throw new InvalidPaymentMethodException("Check payment type entered, Entered payment type: " + paymentMethodNameUpper);
+        }
         int paymentMethodId = paymentType.getValue();
         return paymentMethodId;
     }
