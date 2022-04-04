@@ -45,7 +45,7 @@ public class FeedbackService {
     }
 
     @Autowired
-   private Configuration config;
+    private Configuration config;
 
 
 
@@ -78,8 +78,8 @@ public class FeedbackService {
 
             // Taking static data for testing but should be dynamically
             msg.setFrom(new InternetAddress(From,Name));
-           // msg.setRecipient(Message.RecipientType.TO, new InternetAddress(TO));
-           // msg.addRecipients(Message.RecipientType.CC, String.valueOf(myList));
+            // msg.setRecipient(Message.RecipientType.TO, new InternetAddress(TO));
+            // msg.addRecipients(Message.RecipientType.CC, String.valueOf(myList));
             msg.setRecipients(Message.RecipientType.TO, recipientAddress);
             msg.setSubject(Subject);
             msg.setContent(html,"text/html");

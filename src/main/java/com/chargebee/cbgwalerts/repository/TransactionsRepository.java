@@ -17,7 +17,7 @@ public interface TransactionsRepository extends JpaRepository<Transactions,Integ
     List<DomainAndCountResult> listDomainAndCount(@Param("gateway") int gw, @Param("payment") int payment,
                                                   @Param("status") int status,@Param("localDateTime") LocalDateTime ldt);
 
-   // @Query("Select " + "from Transactions as t where t.gateway = :gateway and t.payment_method = :payment and t.status = :status group by t.site_id")
+    // @Query("Select " + "from Transactions as t where t.gateway = :gateway and t.payment_method = :payment and t.status = :status group by t.site_id")
 //    List<DomainAndCountResult> listDomainAndCount(@Param("gateway") int gw, @Param("payment") int payment,
 //                                                  @Param("status") int status);
 }
