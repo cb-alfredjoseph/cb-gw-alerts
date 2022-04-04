@@ -1,9 +1,9 @@
-package com.chargebee.cbgwalerts.models;
+package com.chargebee.cbgwalerts.model;
 
-public class DomainAndCountResult {
+public class DomainAndCount {
     private String domainName;
     private long count;
-    public DomainAndCountResult(String domainName, long count){
+    public DomainAndCount(String domainName, long count){
         this.domainName = domainName;
         this.count = count;
     }

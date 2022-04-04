@@ -1,11 +1,12 @@
 package com.chargebee.cbgwalerts.service;
 
-import com.chargebee.cbgwalerts.email.FeedbackService;
-import com.chargebee.cbgwalerts.models.DomainAndCountResult;
-import com.chargebee.cbgwalerts.models.MerchantDomain;
-import com.chargebee.cbgwalerts.models.PaymentGateway;
-import com.chargebee.cbgwalerts.models.PaymentMethod;
+import com.chargebee.cbgwalerts.email.EmailService;
+import com.chargebee.cbgwalerts.model.DomainAndCount;
+import com.chargebee.cbgwalerts.model.MerchantDomain;
+import com.chargebee.cbgwalerts.model.PaymentGateway;
+import com.chargebee.cbgwalerts.model.PaymentMethod;
 import com.chargebee.cbgwalerts.repository.PaymentsRepository;
+import com.chargebee.cbgwalerts.util.EnumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,9 @@ import java.util.*;
 public class PaymentsService {
 
     @Autowired
-    private FeedbackService feedbackService;
+    private EmailService emailService;
+    @Autowired
+    private EnumService enumService;
 
     private PaymentsRepository paymentsRepository;
     @Autowired
@@ -27,37 +30,27 @@ public class PaymentsService {
     }
     private int gatewayId;
     private int paymentMethodId;
-    private int paymentstatusId;
+    private int paymentStatusId;
 
-    public PaymentGateway returnFinal(String gateway_name, String payment_methodName, String status) throws AddressException {
-//        TransactionsService transactionsService = new TransactionsService();
-//
-//        gatewayId = transactionsService.getGatewayId(gateway_name);
-//
-//        paymentMethodId = transactionsService.getPaymentMethodId(payment_methodName);
-        LocalDateTime ldt = LocalDateTime.now().minus(1, ChronoUnit.HOURS);
+    public PaymentGateway listPendingPayments(String gateway_name, String payment_methodName, String status) throws AddressException {
 
         String gatewayNameUpper = gateway_name.toUpperCase();
-        Name gwId = Name.valueOf(gatewayNameUpper);
-        gatewayId = gwId.getValue();
-        System.out.println("Gateway id "+ gatewayId);
-
+        gatewayId = enumService.getGatewayId(gatewayNameUpper);
         String paymentMethodNameUpper = payment_methodName.toUpperCase();
-        PaymentMethodEnum paymentType = PaymentMethodEnum.valueOf(paymentMethodNameUpper);
-        paymentMethodId = paymentType.getValue();
-        System.out.println("Payment Method id - "+ paymentMethodId);
+        paymentMethodId = enumService.getPaymentMethodId(paymentMethodNameUpper);
+        LocalDateTime ldt = LocalDateTime.now().minus(1, ChronoUnit.HOURS);
 
         String statusNameUpper = status.toUpperCase();
-        PaymentStatusEnum statusId = PaymentStatusEnum.valueOf(statusNameUpper);
-        paymentstatusId = statusId.getValue();
-        System.out.println("paymentstatusId " + paymentstatusId);
+        EnumService.PaymentStatusEnum statusId = EnumService.PaymentStatusEnum.valueOf(statusNameUpper);
+        paymentStatusId = statusId.getValue();
+        System.out.println("paymentStatusId " + paymentStatusId);
 
         PaymentGateway paymentGateway = new PaymentGateway();
         List<PaymentMethod> paymentMethodList = new ArrayList<>();
         PaymentMethod paymentMethod = new PaymentMethod();
         List<MerchantDomain> merchantDomainList = new ArrayList<>();
-        List<DomainAndCountResult> domainAndCountResultList = paymentsRepository.listDomainAndCount(gatewayId,paymentMethodId,paymentstatusId,ldt);
-        for(DomainAndCountResult dcr : domainAndCountResultList){
+        List<DomainAndCount> domainAndCountResultList = paymentsRepository.listDomainAndCount(gatewayId,paymentMethodId,paymentStatusId,ldt);
+        for(DomainAndCount dcr : domainAndCountResultList){
             MerchantDomain merchantDomain = new MerchantDomain(dcr.getCount(),null, dcr.getDomainName());
             merchantDomainList.add(merchantDomain);
         }
@@ -65,8 +58,6 @@ public class PaymentsService {
         paymentMethod.listMerchantDomains(merchantDomainList);
         paymentMethodList.add(paymentMethod);
         paymentGateway.listPaymentMethods(paymentMethodList);
-//        Optional<PaymName> gatewayName = Name.get(gatewayId);
-        //System.out.println(gatewayName.get());
 
         List<MerchantDomain> merchantDomainListLocal = null;
         if (paymentGateway != null && paymentGateway.getPaymentMethodList() != null && paymentGateway.getPaymentMethodList().size() != 0)
@@ -82,67 +73,12 @@ public class PaymentsService {
         model.put("merchantDomainList", merchantDomainListLocal );
 
 
-        feedbackService.sendFeedback(model);
+        emailService.sendFeedback(model);
 
         return paymentGateway;
 
     }
 
-    public enum Name {
-        CHARGEBEE(100), STRIPE(700), WEPAY(250), BRAINTREE(300), AUTHORIZE_NET(1200), PAYPAL_PRO(600), PIN(1500), EWAY(1100), EWAY_RAPID(1110), WORLDPAY(500), BALANCED_PAYMENTS(1300),
-        BAMBORA(1400), BLUEPAY(2300), ELAVON(1800), FIRST_DATA_GLOBAL(2200), HDFC(1000), MIGS(1700), NMI(2000), INGENICO_EPAYMENTS(900), PAYMILL(1600), PAYPAL_PAYFLOW_PRO(2100), SAGE_PAY(1900),
-        TCO(400), WIRECARD(800), AMAZON_PAYMENTS(5000), PAYPAL_EXPRESS_CHECKOUT(6000), GOCARDLESS(7000), ADYEN(7100), ORBITAL(8000), MONERIS_US(9000), MONERIS(10000), BLUESNAP(11000), CYBERSOURCE(11100),
-        VANTIV(4000), CHECKOUT_COM(4100), PAYPAL(4200), INGENICO_DIRECT(4300), EXACT(4400), MOLLIE(4500), QUICKBOOKS(4700), RAZORPAY(4600), NOT_APPLICABLE(10);
-
-        private final int id;
-
-        Name(int value) {
-            this.id = value;
-        }
-
-        public int getValue() {
-            return id;
-        }
-
-        public static Optional<TransactionsService.Name> get(int num) {
-            return Arrays.stream(TransactionsService.Name.values())
-                    .filter(name -> name.id == num)
-                    .findFirst();
-        }
-    }
-
-    public enum PaymentMethodEnum{
-        CARD(100),CASH(200),CHECK(300),CHARGEBACK(700),BANK_TRANSFER(400),AMAZON_PAYMENTS(500),PAYPAL_EXPRESS_CHECKOUT(600),DIRECT_DEBIT(800),ALIPAY(1000),UNIONPAY(1100),APPLE_PAY(1200),WECHAT_PAY(1300),ACH_CREDIT(1400),SEPA_CREDIT(1500),IDEAL(1700),GOOGLE_PAY(1600),SOFORT(1800),BANCONTACT(1900),GIROPAY(2000),DOTPAY(2100),OTHER(999),APP_STORE(2200),UPI(2300),NETBANKING_EMANDATES(2400);
-
-        private final int id;
-        PaymentMethodEnum(int value){
-            this.id = value;
-        }
-        public int getValue() {
-            return id;
-        }
-        public static Optional<TransactionsService.PaymentMethodEnum> get(int num) {
-            return Arrays.stream(TransactionsService.PaymentMethodEnum.values())
-                    .filter(paymentMethodValue -> paymentMethodValue.id == num)
-                    .findFirst();
-        }
-    }
-
-    public enum PaymentStatusEnum{
-        NO_CARD(100),VALID(200),EXPIRING(300),EXPIRED(400),PENDING_VERIFICATION(500),INVALID(600);
-
-        private final int id;
-        PaymentStatusEnum(int value){
-            this.id = value;
-        }
-        public int getValue() {
-            return id;
-        }
-        public static Optional<TransactionsService.PaymentMethodEnum> get(int num) {
-            return Arrays.stream(TransactionsService.PaymentMethodEnum.values())
-                    .filter(paymentMethodValue -> paymentMethodValue.id == num)
-                    .findFirst();
-        }
-    }
-
 }
+
+

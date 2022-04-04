@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="lite_sites")
 @Data
-public class LiteSites {
+public class LiteSite {
     @Id
     @Column(name = "id")
     private long site_id;

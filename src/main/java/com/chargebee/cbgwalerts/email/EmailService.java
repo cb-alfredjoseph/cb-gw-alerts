@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Properties;
 
 @Service
-public class FeedbackService {
+public class EmailService {
 
     @Value("${spring.mail.to}")
     String TO;
@@ -37,11 +37,11 @@ public class FeedbackService {
     @Value("#{'${spring.mail.to}'.split(',')}")
     public List<String> myList;
 
-    public  EmailCfg emailCfg;
+    public EmailConfiguration emailConfiguration;
     @Autowired
-    public FeedbackService(EmailCfg emailCfg)
+    public EmailService(EmailConfiguration emailConfiguration)
     {
-        this.emailCfg=emailCfg;
+        this.emailConfiguration=emailConfiguration;
     }
 
     @Autowired
@@ -63,11 +63,10 @@ public class FeedbackService {
 
         Properties props = System.getProperties();
         props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.port", this.emailCfg.getPort());
+        props.put("mail.smtp.port", this.emailConfiguration.getPort());
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.starttls.required", "true");
         props.put("mail.smtp.auth", "true");
-        //props.put("mail.debug", "true");
 
         Session session = Session.getDefaultInstance(props);
         MimeMessage msg = new MimeMessage(session);
@@ -76,10 +75,7 @@ public class FeedbackService {
             Template t = config.getTemplate("email-body.ftl");
             String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
 
-            // Taking static data for testing but should be dynamically
             msg.setFrom(new InternetAddress(From,Name));
-            // msg.setRecipient(Message.RecipientType.TO, new InternetAddress(TO));
-            // msg.addRecipients(Message.RecipientType.CC, String.valueOf(myList));
             msg.setRecipients(Message.RecipientType.TO, recipientAddress);
             msg.setSubject(Subject);
             msg.setContent(html,"text/html");
@@ -87,7 +83,7 @@ public class FeedbackService {
 
 
             transport = session.getTransport();
-            transport.connect(this.emailCfg.getHost(), this.emailCfg.getUsername(), this.emailCfg.getPassword());
+            transport.connect(this.emailConfiguration.getHost(), this.emailConfiguration.getUsername(), this.emailConfiguration.getPassword());
             transport.sendMessage(msg, msg.getAllRecipients());
             System.out.println("Email sent!");
             transport.close();

@@ -3,7 +3,7 @@ package com.chargebee.cbgwalerts.email;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
-public class Api {
+public class TemplateApi {
     @Primary
     @Bean
     public FreeMarkerConfigurationFactoryBean factoryBean(){

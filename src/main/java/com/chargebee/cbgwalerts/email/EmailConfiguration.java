@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component
-public class EmailCfg {
+public class EmailConfiguration {
     @Value("${spring.mail.host}")
     private String host;
 
