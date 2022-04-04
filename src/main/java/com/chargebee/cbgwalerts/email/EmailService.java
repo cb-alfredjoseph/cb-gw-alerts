@@ -23,16 +23,16 @@ import java.util.Properties;
 public class EmailService {
 
     @Value("${spring.mail.to}")
-    String TO;
+    String to;
 
     @Value("${spring.mail.from}")
-    String From;
+    String from;
 
     @Value("${spring.mail.name}")
-    String Name;
+    String name;
 
     @Value("${spring.mail.subject}")
-    String Subject;
+    String subject;
 
     @Value("#{'${spring.mail.to}'.split(',')}")
     public List<String> myList;
@@ -49,7 +49,7 @@ public class EmailService {
 
 
 
-    public void sendFeedback(Map<String, Object> model ) throws AddressException {
+    public void sendEmail(Map<String, Object> model ) throws AddressException {
 
         InternetAddress[] recipientAddress = new InternetAddress[myList.size()];
 
@@ -75,9 +75,9 @@ public class EmailService {
             Template t = config.getTemplate("email-body.ftl");
             String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
 
-            msg.setFrom(new InternetAddress(From,Name));
+            msg.setFrom(new InternetAddress(from,name));
             msg.setRecipients(Message.RecipientType.TO, recipientAddress);
-            msg.setSubject(Subject);
+            msg.setSubject(subject);
             msg.setContent(html,"text/html");
 
 

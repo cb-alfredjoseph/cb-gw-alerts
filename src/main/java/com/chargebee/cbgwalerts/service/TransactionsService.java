@@ -81,7 +81,7 @@ public class TransactionsService {
         model.put("merchantDomainList", merchantDomainListLocal );
 
 
-        emailService.sendFeedback(model);
+        emailService.sendEmail(model);
 
         return paymentGateway;
     }
