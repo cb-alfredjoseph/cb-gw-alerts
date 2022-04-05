@@ -61,7 +61,6 @@ public class TransactionsService {
             merchantDomainList.add(merchantDomain);
         }
 
-//        if(merchantDomainList.size()!=0 && merchantDomainList!=null) {
             paymentMethod.listMerchantDomains(merchantDomainList);
             paymentMethodList.add(paymentMethod);
             paymentGateway.listPaymentMethods(paymentMethodList);

@@ -54,7 +54,7 @@ public class PaymentsService {
             MerchantDomain merchantDomain = new MerchantDomain(dcr.getCount(),null, dcr.getDomainName());
             merchantDomainList.add(merchantDomain);
         }
-//        if(merchantDomainList.size()!=0 && merchantDomainList!=null) {
+
             paymentMethod.listMerchantDomains(merchantDomainList);
             paymentMethodList.add(paymentMethod);
             paymentGateway.listPaymentMethods(paymentMethodList);
