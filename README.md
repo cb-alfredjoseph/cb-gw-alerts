@@ -1,7 +1,7 @@
 # cb-gw-alerts
-Gateway Alert microservicPrerequisites
+Gateway Alert microservice Pre-requisites
 
-**Prerequisites**
+**Pre-requisites**
 
 * Java version 1.8.0_202
 * MySQL version 8.0.21
