@@ -31,5 +31,6 @@ Add the following details to Application.property for email service to work
 * spring.mail.subject=subject
 * spring.mail.name=name
 
+**Confluence Link- ** https://mychargebee.atlassian.net/wiki/spaces/~914783137/pages/edit-v2/2765750340
 
 
