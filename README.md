@@ -10,9 +10,9 @@ Gateway Alert microservice Pre-requisites
 * Mail version 2.2.0
 
 **Setup**
-* Click  New->Project in IntelliJ
-* Click "Spring Initializr" and click Language: Java,Type: Gradle,Project SDK:17 Eclipse Temurin version 17.0.1,Java:8,Package: War and click Next
-* In Dependencies,scroll down in "Developer Tools" and check Spring Boot DevTools,Lombok,in "Web" check Spring Web,in "SQL" check Spring Data JPA,MySQL Driver,in "I/O" check Java Mail Sender, in "Template Engines" check Apache Freemarker
+* Clone this repo.
+* Verify that Language: Java,Type: Gradle,Project SDK:17 Eclipse Temurin version 17.0.1,Java:8,Package: War 
+* In Dependencies, Spring Boot DevTools,Lombok, Spring Web, JPA,MySQL Driver,Java Mail Sender, Apache Freemarker is being used.
 * Now check the build.gradle and add the following dependencies to make sure freemarker and spring-boot-starter-mail versions are up-to-date 
     implementation 'org.springframework.boot:spring-boot-starter-freemarker:2.6.5'
     implementation 'org.springframework.boot:spring-boot-starter-mail:2.2.0.RELEASE'
