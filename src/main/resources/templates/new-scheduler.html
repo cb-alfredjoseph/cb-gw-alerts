@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Scheduler</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container my-2">
+    <h1> Job scheduler</h1>
+    <hr>
+    <h2>Save Scheduler</h2>
+    <form action ="#" th:action="@{/saveScheduler}" th:object="${dynamicScheduler}", method="POST">
+        <input type ="number" th:field="*{delayTime}" placeholder="Delay Time" class="form-control mb-4 col-4">
+        <button type="submit" class="btn btn-info col-2"> Save Scheduler </button>
+    </form>
+</div>
+</body>
+</html>
