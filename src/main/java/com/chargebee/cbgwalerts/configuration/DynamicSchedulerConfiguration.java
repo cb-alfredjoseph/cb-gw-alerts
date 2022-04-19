@@ -80,6 +80,8 @@ public class DynamicSchedulerConfiguration implements SchedulingConfigurer {
 */
 
 
+    //////start////////
+
     @Bean
     public Executor taskExecutor() {
         return Executors.newSingleThreadScheduledExecutor();
@@ -120,6 +122,12 @@ public class DynamicSchedulerConfiguration implements SchedulingConfigurer {
                         Optional<Date> lastCompletionTime =
                                 Optional.ofNullable(context.lastCompletionTime());
                         Optional<DynamicScheduler> dynamicScheduler = dynamicSchedulerRepository.findById(1L);
+                        if (dynamicScheduler.isPresent()) {
+                            dynamicScheduler.get().getDays();
+                            dynamicScheduler.get().getHours();
+                            dynamicScheduler.get().getMinutes();
+                            dynamicScheduler.get().getSeconds();
+                        }
                         Instant nextExecutionTime =
                                 lastCompletionTime.orElseGet(Date::new).toInstant()
                                         .plusMillis(dynamicScheduler.isPresent() ? dynamicScheduler.get().getDelayTime() : 2000);

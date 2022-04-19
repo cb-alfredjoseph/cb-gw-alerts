@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
+<!--
 <head>
     <meta charset="UTF-8">
     <title>Gateway Alerting system</title>
@@ -9,23 +10,115 @@
           crossorigin="anonymous">
 </head>
 <body>
+
 <div class="container my-2">
-    <a th:href = "@{/newSchedulerForm}" class="btn btn-primary btn-sm mb-3"> Add Scheduler </a>
+
     <h1> Scheduler list</h1>
-    <table border ="1" class = "table table-striped table-responsive-md">
+  <table border ="1" class = "table table-striped table-responsive-md">
         <thead>
         <tr>
             <th> ID </th>
             <th> Scheduler delay time</th>
+            <th> Days </th>
+            <th> Hours</th>
+            <th> Minutes</th>
+            <th> Seconds</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each = "scheduler: ${listSchedulers}">
             <td th:int="${scheduler.id}"></td>
             <td th:text="${scheduler.delayTime}"></td>
+            <td th:text="${scheduler.days}"></td>
+            <td th:text="${scheduler.hours}"></td>
+            <td th:text="${scheduler.minutes}"></td>
+            <td th:text="${scheduler.seconds}"></td>
         </tr>
         </tbody>
     </table>
+    <a th:href = "@{/newSchedulerForm}" class="btn btn-primary btn-sm mb-3"> Add Scheduler </a>
 </div>
 </body>
 </html>
+-->
+
+
+<head>
+    <meta charset="utf-8">
+    <title>Gateway Alerting system</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!--&lt;!&ndash; google fonts &ndash;&gt;-->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&family=Montserrat:wght@500;600&family=Sacramento&family=Ubuntu&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://kit.fontawesome.com/2ce06700c0.js" crossorigin="anonymous"></script>
+
+</head>
+<div class="navbar-background">
+
+
+    <nav class="navbar navbar-expand-lg bg-secondary" >
+
+
+        <a href="#" class="navbar-brand px-5">
+
+            <img src="https://i.ibb.co/gtp6TCT/Chargebee-logo.png" width="170" alt="Chargebee-logo" class="d-inline-block align-middle mr-2">
+
+        </a>
+
+        <ul class="navbar-nav ml-auto px-5">
+            <li class = "nav-item gw-alert-navbar">
+                Gateway Alerting System
+            </li>
+        </ul>
+    </nav>
+</div>
+<body class="bg-primary">
+<div class="center">
+    <p>The scheduler is running every</p>
+    <p> 2hours 30 seconds</p>
+    <button type="button" name="button" class="btn btn-dark btn-large">
+
+
+        <i class="fa-solid fa-clock-rotate-left"></i> Change Scheduler Time</button>
+</div>
+
+<div class="container my-2">
+
+    <h1> Scheduler list</h1>
+  <table border ="1" class = "table table-striped table-responsive-md">
+        <thead>
+        <tr>
+            <th> ID </th>
+            <th> Scheduler delay time</th>
+            <th> Days </th>
+            <th> Hours</th>
+            <th> Minutes</th>
+            <th> Seconds</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "scheduler: ${listSchedulers}">
+            <td th:int="${scheduler.id}"></td>
+            <td th:text="${scheduler.delayTime}"></td>
+            <td th:text="${scheduler.days}"></td>
+            <td th:text="${scheduler.hours}"></td>
+            <td th:text="${scheduler.minutes}"></td>
+            <td th:text="${scheduler.seconds}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href = "@{/newSchedulerForm}" class="btn btn-primary btn-sm mb-3"> Add Scheduler </a>
+</div>
+</body>
+</html>
+
+

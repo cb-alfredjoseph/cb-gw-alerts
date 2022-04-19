@@ -15,6 +15,10 @@
     <h2>Save Scheduler</h2>
     <form action ="#" th:action="@{/saveScheduler}" th:object="${dynamicScheduler}", method="POST">
         <input type ="number" th:field="*{delayTime}" placeholder="Delay Time" class="form-control mb-4 col-4">
+        <input type ="number" th:field="*{days}" placeholder="Delay Time" class="form-control mb-4 col-4">
+        <input type ="number" th:field="*{hours}" placeholder="Delay Time" class="form-control mb-4 col-4">
+        <input type ="number" th:field="*{minutes}" placeholder="Delay Time" class="form-control mb-4 col-4">
+        <input type ="number" th:field="*{seconds}" placeholder="Delay Time" class="form-control mb-4 col-4">
         <button type="submit" class="btn btn-info col-2"> Save Scheduler </button>
     </form>
 </div>
