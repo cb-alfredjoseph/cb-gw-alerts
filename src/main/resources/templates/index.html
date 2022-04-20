@@ -1,71 +1,101 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<!--
-<head>
-    <meta charset="UTF-8">
-    <title>Gateway Alerting system</title>
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-          crossorigin="anonymous">
-</head>
-<body>
-
-<div class="container my-2">
-
-    <h1> Scheduler list</h1>
-  <table border ="1" class = "table table-striped table-responsive-md">
-        <thead>
-        <tr>
-            <th> ID </th>
-            <th> Scheduler delay time</th>
-            <th> Days </th>
-            <th> Hours</th>
-            <th> Minutes</th>
-            <th> Seconds</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each = "scheduler: ${listSchedulers}">
-            <td th:int="${scheduler.id}"></td>
-            <td th:text="${scheduler.delayTime}"></td>
-            <td th:text="${scheduler.days}"></td>
-            <td th:text="${scheduler.hours}"></td>
-            <td th:text="${scheduler.minutes}"></td>
-            <td th:text="${scheduler.seconds}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <a th:href = "@{/newSchedulerForm}" class="btn btn-primary btn-sm mb-3"> Add Scheduler </a>
-</div>
-</body>
-</html>
--->
-
 
 <head>
     <meta charset="utf-8">
-    <title>Gateway Alerting system</title>
+    <title>Gateway Alert system</title>
+    <link rel = "icon" href ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpEDcA0ko0Q0AbnPZfDHBqzmwaFTLDq4oxRhIf9xPA&s"
+          type = "image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!--&lt;!&ndash; google fonts &ndash;&gt;-->
-    <link href="https://fonts.googleapis.com/css2?family=Cookie&family=Montserrat:wght@500;600&family=Sacramento&family=Ubuntu&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&family=Montserrat:wght@500;600&family=Noto+Serif:ital@1&family=Oxygen:wght@300&family=Ubuntu&display=swap" rel="stylesheet">
+
 
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css">
+
 
     <script src="https://kit.fontawesome.com/2ce06700c0.js" crossorigin="anonymous"></script>
+    <style>
 
+        .bg-secondary  {
+            background-color:  #330066 !important;
+        }
+
+
+        .bg-primary{
+            background-color: #330066  !important;
+        }
+
+
+
+        .gw-alert-navbar{
+            font-family: 'Montserrat', sans-serif;
+            color: #ff751a;
+            font-size: 2.5rem;
+        }
+
+
+        .center_div{
+            text-align: center;
+            padding:8% 10% 10% 10%;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.5;
+            font-size: 1.7rem;
+            color:#999999;
+        }
+
+
+        .orange-text{
+            color: #ff751a;
+            line-height: 1.5;
+            font-size: 3.5rem;
+        }
+
+
+        .btn-lg, .btn-group-lg > .btn {
+            padding: 0.5rem 1rem;
+            font-size: 1.6rem;
+            line-height: 1.6;
+            border-radius: 0.3rem;
+            color: #ff751a;
+        }
+
+        .table td {
+            padding: 0.75rem 0;
+            vertical-align: top;
+        }
+
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin:0 auto;
+            /*margin-bottom: 1rem;*/
+            background-color: transparent;
+        }
+
+        .btn-dark {
+            color: #ff751a;
+            background-color: #330066;
+            border-color: #343a40;
+        }
+
+
+    </style>
 </head>
 <div class="navbar-background">
 
 
-    <nav class="navbar navbar-expand-lg bg-secondary" >
+    <nav class="navbar navbar-expand-lg bg-secondary"  >
 
 
         <a href="#" class="navbar-brand px-5">
@@ -76,49 +106,39 @@
 
         <ul class="navbar-nav ml-auto px-5">
             <li class = "nav-item gw-alert-navbar">
-                Gateway Alerting System
+                Gateway Alert System
             </li>
         </ul>
     </nav>
 </div>
 <body class="bg-primary">
-<div class="center">
-    <p>The scheduler is running every</p>
-    <p> 2hours 30 seconds</p>
-    <button type="button" name="button" class="btn btn-dark btn-large">
+<div class="center_div">
+    <p>The scheduler runs every</p>
+    <table class="table w-50 p-3 table-borderless" >
+    <tr th:each = "scheduler: ${listSchedulers}">
 
+        <td class="orange-text" th:text="${scheduler.days}"></td>
 
-        <i class="fa-solid fa-clock-rotate-left"></i> Change Scheduler Time</button>
-</div>
+        <td class="orange-text" th:text="${scheduler.hours}"></td>
 
-<div class="container my-2">
+        <td class="orange-text" th:text="${scheduler.minutes}"></td>
 
-    <h1> Scheduler list</h1>
-  <table border ="1" class = "table table-striped table-responsive-md">
-        <thead>
+        <td class="orange-text" th:text="${scheduler.seconds}"></td>
+
+    </tr>
         <tr>
-            <th> ID </th>
-            <th> Scheduler delay time</th>
-            <th> Days </th>
-            <th> Hours</th>
-            <th> Minutes</th>
-            <th> Seconds</th>
+            <td>day(s)   </td>
+            <td>hour(s)   </td>
+            <td>minute(s)   </td>
+            <td>second(s)   </td>
         </tr>
-        </thead>
-        <tbody>
-        <tr th:each = "scheduler: ${listSchedulers}">
-            <td th:int="${scheduler.id}"></td>
-            <td th:text="${scheduler.delayTime}"></td>
-            <td th:text="${scheduler.days}"></td>
-            <td th:text="${scheduler.hours}"></td>
-            <td th:text="${scheduler.minutes}"></td>
-            <td th:text="${scheduler.seconds}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <a th:href = "@{/newSchedulerForm}" class="btn btn-primary btn-sm mb-3"> Add Scheduler </a>
+</table>
+    <hr>
+    <a th:href = "@{/newSchedulerForm}">
+    <button type="button" name="button" class="btn btn-dark btn-lg">
+        <i class="fa-solid fa-clock-rotate-left"></i> Update Scheduler Time</button>
+    </a>
 </div>
 </body>
 </html>
-
 

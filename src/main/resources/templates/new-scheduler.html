@@ -2,25 +2,115 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Job Scheduler</title>
+    <title>Gateway Alert System</title>
+    <link rel = "icon" href ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpEDcA0ko0Q0AbnPZfDHBqzmwaFTLDq4oxRhIf9xPA&s"
+          type = "image/x-icon">
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
+    <style>
+        .bg-secondary  {
+            background-color:  #330066 !important;
+        }
+
+
+        .bg-primary{
+            background-color: #330066  !important;
+        }
+
+
+
+        .gw-alert-navbar{
+            font-family: 'Montserrat', sans-serif;
+            color: #ff751a;
+            font-size: 2.3rem;
+        }
+        .center-button{
+            text-align: center;
+            padding:10px;
+            font-family: 'Montserrat', sans-serif;
+
+        }
+
+        .center_div{
+            text-align: center;
+            padding:5% 10%;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.5;
+            font-size: 1.7rem;
+            color:#999999;
+        }
+
+        .btn-dark {
+            color: #ff751a;
+            background-color: #330066;
+            border-color: #343a40;
+        }
+
+        .btn-lg, .btn-group-lg > .btn {
+            padding: 0.5rem 1rem;
+            font-size: 1.5rem;
+            line-height: 1.5;
+            border-radius: 0.3rem;
+            color: #ff751a;
+        }
+
+
+        .orange-text{
+            color: #ff751a;
+        }
+
+    </style>
+    
+
 </head>
-<body>
-<div class="container my-2">
-    <h1> Job scheduler</h1>
+
+div class="navbar-background">
+
+
+<nav class="navbar navbar-expand-lg bg-secondary"  >
+
+
+    <a href="#" class="navbar-brand px-5">
+
+        <img src="https://i.ibb.co/gtp6TCT/Chargebee-logo.png" width="170" alt="Chargebee-logo" class="d-inline-block align-middle mr-2">
+
+    </a>
+</nav>
+</div>
+
+<body class="bg-primary">
+
+<div class="center_div ">
+
+<form th:action="@{/register}" method="post" th:object="${dynamicScheduler}">
+    <div class="row">
+        <div class="col">
+            <label class="orange-text"> Days</label>
+            <input type="number" class="form-control" placeholder="Days" min="0" required th:field="*{days}">
+        </div>
+        <div class="col">
+            <label class="orange-text">Hours</label>
+            <input type="number" class="form-control" placeholder="Hours" min="0" required max="23" th:field="*{hours}">
+        </div>
+        <div class="col">
+            <label class="orange-text"> Minutes</label>
+            <input type="number" class="form-control" placeholder="Minutes" min="0" required max="59" th:field="*{minutes}">
+        </div>
+        <div class="col">
+            <label class="orange-text"> Seconds </label>
+            <input type="number" class="form-control" placeholder="Seconds" min="0" required max="59" th:field="*{seconds}">
+        </div>
+
+    </div>
     <hr>
-    <h2>Save Scheduler</h2>
-    <form action ="#" th:action="@{/saveScheduler}" th:object="${dynamicScheduler}", method="POST">
-        <input type ="number" th:field="*{delayTime}" placeholder="Delay Time" class="form-control mb-4 col-4">
-        <input type ="number" th:field="*{days}" placeholder="Delay Time" class="form-control mb-4 col-4">
-        <input type ="number" th:field="*{hours}" placeholder="Delay Time" class="form-control mb-4 col-4">
-        <input type ="number" th:field="*{minutes}" placeholder="Delay Time" class="form-control mb-4 col-4">
-        <input type ="number" th:field="*{seconds}" placeholder="Delay Time" class="form-control mb-4 col-4">
-        <button type="submit" class="btn btn-info col-2"> Save Scheduler </button>
-    </form>
+    <hr>
+    <hr>
+    <button type="submit" name="button" class="btn btn-dark btn-lg">Change Scheduler </button>
+</form>
 </div>
 </body>
 </html>
+
+

@@ -2,7 +2,7 @@ package com.chargebee.cbgwalerts.controller;
 
 
 import com.chargebee.cbgwalerts.configuration.DynamicSchedulerConfiguration;
-import com.chargebee.cbgwalerts.model.DynamicScheduler;
+import com.chargebee.cbgwalerts.entity.DynamicScheduler;
 import com.chargebee.cbgwalerts.service.DynamicSchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +27,7 @@ public class DynamicSchedulerController {
         return "index";
     }
 
-    @GetMapping("/newSchedulerForm")
+    /*@GetMapping("/newSchedulerForm")
     public String newSchedulerForm(Model model){
         //creating model attribute to bind form data
         DynamicScheduler dynamicScheduler = new DynamicScheduler();
@@ -40,6 +40,22 @@ public class DynamicSchedulerController {
         // save scheduler to database
         dynamicSchedulerService.saveScheduler(dynamicScheduler);
         //dynamicSchedulerConfiguration.fixedDelay();
+        return "redirect:/";
+    }*/
+
+    @GetMapping("/newSchedulerForm")
+    public String getForm(Model model){
+        DynamicScheduler dynamicScheduler=new DynamicScheduler();
+        model.addAttribute("dynamicScheduler",dynamicScheduler);
+        return "new-scheduler";
+    }
+    @PostMapping("/register")
+    public String postForm(@ModelAttribute("dynamicScheduler")DynamicScheduler dynamicScheduler){
+
+        dynamicScheduler=dynamicSchedulerService.configureDelayTime(dynamicScheduler);
+        dynamicSchedulerService.saveScheduler(dynamicScheduler);
+
+
         return "redirect:/";
     }
 

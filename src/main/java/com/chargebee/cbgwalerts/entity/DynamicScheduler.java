@@ -1,4 +1,4 @@
-package com.chargebee.cbgwalerts.model;
+package com.chargebee.cbgwalerts.entity;
 
 import javax.persistence.*;
 

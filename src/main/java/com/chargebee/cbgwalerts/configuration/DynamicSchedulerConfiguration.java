@@ -1,6 +1,6 @@
 package com.chargebee.cbgwalerts.configuration;
 
-import com.chargebee.cbgwalerts.model.DynamicScheduler;
+import com.chargebee.cbgwalerts.entity.DynamicScheduler;
 import com.chargebee.cbgwalerts.model.PaymentGateway;
 import com.chargebee.cbgwalerts.repository.DynamicSchedulerRepository;
 import com.chargebee.cbgwalerts.service.TransactionsService;
@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.web.client.RestTemplate;
@@ -42,45 +41,6 @@ public class DynamicSchedulerConfiguration implements SchedulingConfigurer {
     @Autowired
     private TransactionsService transactionsService;
 
-/*
-    @Scheduled(fixedDelay = 2000)
-    public void job1() throws InterruptedException {
-        System.out.println("The time is : " + new Date());
-        RestTemplate restTemplate1 = new RestTemplate();
-        PaymentGateway finalist2= restTemplate1.getForObject(host+"/transactionsInfo?gateway="+gatewayName+"&payment_method="+paymentMethod+"&status="+status,PaymentGateway.class);
-        System.out.println("result1 : " + finalist2.toString());
-
-        //return finalist2;
-    }
-    @Scheduled(fixedDelay = 2000)
-    public void job2() throws InterruptedException {
-        System.out.println("The time is : " + new Date());
-        RestTemplate restTemplate2 = new RestTemplate();
-        PaymentGateway finalist3= restTemplate2.getForObject(host+"/paymentsInfo?gateway="+gatewayName+"&payment_method="+paymentMethod+"&status="+paymentStatus,PaymentGateway.class);
-        System.out.println("result2 : " + finalist3.toString());
-        //return finalist3;
-    }
-
-  @Scheduled(fixedDelay = 2000)
-    public void job_run() throws InterruptedException  {
-        DynamicSchedulerConfiguration dynamicSchedulerConfiguration1 = new DynamicSchedulerConfiguration();
-        dynamicSchedulerConfiguration1.job2();
-*/
-/*      DynamicSchedulerConfiguration dynamicSchedulerConfiguration2 = new DynamicSchedulerConfiguration();
-        paymentGateway = dynamicSchedulerConfiguration1.job1();
-        dynamicSchedulerConfiguration2.job2();*//*
-
-
-    }
-
-    @Override
-    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-
-    }
-*/
-
-
-    //////start////////
 
     @Bean
     public Executor taskExecutor() {
@@ -122,15 +82,9 @@ public class DynamicSchedulerConfiguration implements SchedulingConfigurer {
                         Optional<Date> lastCompletionTime =
                                 Optional.ofNullable(context.lastCompletionTime());
                         Optional<DynamicScheduler> dynamicScheduler = dynamicSchedulerRepository.findById(1L);
-                        if (dynamicScheduler.isPresent()) {
-                            dynamicScheduler.get().getDays();
-                            dynamicScheduler.get().getHours();
-                            dynamicScheduler.get().getMinutes();
-                            dynamicScheduler.get().getSeconds();
-                        }
                         Instant nextExecutionTime =
                                 lastCompletionTime.orElseGet(Date::new).toInstant()
-                                        .plusMillis(dynamicScheduler.isPresent() ? dynamicScheduler.get().getDelayTime() : 2000);
+                                        .plusSeconds(dynamicScheduler.isPresent() ? dynamicScheduler.get().getDelayTime() : 2000);
                         return Date.from(nextExecutionTime);
                     }
                 }
