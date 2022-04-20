@@ -31,6 +31,6 @@ Add the following details to Application.property for email service to work
 * spring.mail.subject=subject
 * spring.mail.name=name
 
-**Confluence Link-** https://mychargebee.atlassian.net/wiki/spaces/~914783137/pages/2765750340/Gateway+Transaction+Payment+Source+Alert
+**Confluence Link-** https://mychargebee.atlassian.net/l/c/cDKUV0qg
 
 
