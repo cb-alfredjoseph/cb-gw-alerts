@@ -1,5 +1,5 @@
 # cb-gw-alerts
-Gateway Alert microservice Pre-requisites
+Gateway Alert microservice
 
 **Pre-requisites**
 
